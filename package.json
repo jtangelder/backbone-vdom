@@ -1,0 +1,23 @@
+{
+  "name": "blendle-vdom",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "global": "^4.3.0",
+    "mercury": "^11.0.0"
+  },
+  "devDependencies": {
+    "exoskeleton": "^0.7.0",
+    "global": "^4.3.0",
+    "lodash": "^2.4.1",
+    "raf": "^2.0.4",
+    "virtual-dom": "0.0.24",
+    "webpack": "^1.4.14"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
