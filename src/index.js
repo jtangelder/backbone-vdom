@@ -37,18 +37,18 @@ var ItemView = Backbone.VDomView.extend({
 		return (
 			<div>
 				{this.model.get('name')}
-				<a onclick={this.edit.bind(this)}>[edit]</a>
-				<a onclick={this.remove.bind(this)}>[remove]</a>
+				<a onclick={this.onEdit.bind(this)}>[edit]</a>
+				<a onclick={this.onRemove.bind(this)}>[remove]</a>
 			</div>);
 	},
 
-	edit: function() {
+	onEdit: function() {
 		this.model.set('name',
 			window.prompt('Enter new name', this.model.get('name'))
 		);
 	},
 
-	remove: function(){
+	onRemove: function(){
 		this.model.destroy();
 	}
 });
@@ -74,14 +74,14 @@ var ListView = Backbone.VDomView.extend({
 
 		return (
 			<div>
-				<button onclick={this.addItem.bind(this)}>Add list item</button>
+				<button onclick={this.onAddItem.bind(this)}>Add list item</button>
 				<ul>
 					{listItems || <li><em>No Items</em></li>}
 				</ul>
 			</div>);
 	},
 
-	addItem: function(){
+	onAddItem: function(){
 		this.collection.add(new Item());
 	}
 });

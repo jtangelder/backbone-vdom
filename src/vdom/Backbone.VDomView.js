@@ -53,7 +53,7 @@ var VDomView = Backbone.View.extend({
 	},
 
 	vDomAppendView: function(ViewClass, options) {
-		var key = options.key || (options.model && (options.model.cid || options.model.id));
+		var key = options.key || (options.model && (options.model.cid || options.model.id)) || _.uniqueId('vdom');
 		return new ViewWidget(ViewClass, options, key);
 	}
 });

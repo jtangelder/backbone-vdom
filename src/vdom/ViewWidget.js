@@ -12,12 +12,17 @@ ViewWidget.prototype = {
         var Constructor = this.ViewClass;
         this.view = new Constructor(this.options);
 
-        this.update(this, this.element);
-        return this.view.render().el;
+        var element = this.view.render().el;
+        this.update(this, element);
+        return element;
     },
 
-    update: function (inst, element) {
-        // what to do with this method?
+    update: function (widget, element) {
+
+    },
+
+    destroy: function (element) {
+        this.view.remove();
     }
 };
 module.exports = ViewWidget;
