@@ -26,8 +26,8 @@ var VDomView = Backbone.View.extend({
 	 * @returns {ViewWidget}
 	 */
 	vDomAppendView: function(ViewClass, options, key) {
-		key = key || options.key || (options.model && (options.model.cid || options.model.id)) || _.uniqueId('vdom');
-		return new ViewWidget(ViewClass, options, key);
+		key = key || options.key || (options.model && (options.model.cid || options.model.id));
+		return new ViewWidget(ViewClass, options, this.cid + String(key));
 	},
 
 	/**
@@ -37,8 +37,8 @@ var VDomView = Backbone.View.extend({
 	 * @returns {ElementWidget}
 	 */
 	vDomAppendElement: function(element, key) {
-		key = key || _.uniqueId('vdom');
-		return new ElementWidget(element, key);
+		key = key || element.id || element.__vdomkey || (element.__vdomkey = _.uniqueId('vdom'));
+		return new ElementWidget(element, this.cid + String(key));
 	},
 
 	/**

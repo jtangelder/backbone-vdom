@@ -5,15 +5,6 @@ var document = require('global/document');
 var Backbone = require('exoskeleton');
 require('./vdom/Backbone.VDomView');
 
-
-// overwrite this method from exoskeleton
-// because we don't want to use jQuery
-Backbone.View.prototype._setAttributes = function(attrs) {
-	for(var name in attrs) {
-		this.el.setAttribute(name, attrs[name]);
-	}
-};
-
 // small example backbone application to demo and test the workings
 
 var Item = Backbone.Model.extend({
@@ -87,3 +78,18 @@ var ListView = Backbone.VDomView.extend({
 
 // go!
 new ListView();
+
+
+// overwrite this method from exoskeleton
+// because we don't want to use jQuery
+Backbone.View.prototype._setAttributes = function(attrs) {
+	for(var name in attrs) {
+		this.el.setAttribute(name, attrs[name]);
+	}
+};
+
+Backbone.View.prototype._removeElement = function() {
+	if (this.el.parentNode) {
+		this.el.parentNode.removeChild(this.el);
+	}
+};

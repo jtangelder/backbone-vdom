@@ -42,9 +42,7 @@ ViewWidget.prototype = {
      * @param {HTMLElement} element
      */
     destroy: function (element) {
-        this.view.remove();
-        this.view = null;
-        this.options = null;
+        this.view && this.view.remove();
     }
 };
 
