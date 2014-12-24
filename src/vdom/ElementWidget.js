@@ -1,19 +1,17 @@
 /**
  * Create a virtual-dom widget
- * @param {Backbone.View} ViewClass
- * @param {object} [options]
+ * @param {HTMLElement} element
  * @param {string|number} [key]
  * @constructor
  */
-function ViewWidget(ViewClass, options, key) {
-    this.ViewClass = ViewClass;
-    this.options = options;
+function ElementWidget(element, key) {
+    this.element = element;
 
     // used by virtual-node to identify widgets
     this.name = this.id = key;
 }
 
-ViewWidget.prototype = {
+ElementWidget.prototype = {
     type: 'Widget',
 
     /**
@@ -21,13 +19,7 @@ ViewWidget.prototype = {
      * @returns {HTMLElement}
      */
     init: function () {
-        var Constructor = this.ViewClass;
-        this.view = new Constructor(this.options);
-
-        var element = this.view.render().el;
-        this.update(this, element);
-
-        return element;
+        return this.element;
     },
 
     /**
@@ -42,10 +34,8 @@ ViewWidget.prototype = {
      * @param {HTMLElement} element
      */
     destroy: function (element) {
-        this.view.remove();
-        this.view = null;
-        this.options = null;
+        this.element = null;
     }
 };
 
-module.exports = ViewWidget;
+module.exports = ElementWidget;

@@ -6,13 +6,15 @@ var Backbone = require('exoskeleton');
 require('./vdom/Backbone.VDomView');
 
 
-// only because we dont have jQuery
+// overwrite this method from exoskeleton
+// because we don't want to use jQuery
 Backbone.View.prototype._setAttributes = function(attrs) {
 	for(var name in attrs) {
 		this.el.setAttribute(name, attrs[name]);
 	}
 };
 
+// small example backbone application to demo and test the workings
 
 var Item = Backbone.Model.extend({
 	defaults: {
@@ -20,11 +22,9 @@ var Item = Backbone.Model.extend({
 	}
 });
 
-
 var List = Backbone.Collection.extend({
 	model: Item
 });
-
 
 var ItemView = Backbone.VDomView.extend({
 	tagName: 'li',
@@ -52,7 +52,6 @@ var ItemView = Backbone.VDomView.extend({
 		this.model.destroy();
 	}
 });
-
 
 var ListView = Backbone.VDomView.extend({
 	el: document.body,
@@ -86,4 +85,5 @@ var ListView = Backbone.VDomView.extend({
 	}
 });
 
+// go!
 new ListView();
