@@ -53,7 +53,7 @@ var ListView = Backbone.VDomView.extend({
 		var listItems;
 		if(this.collection.length) {
 			listItems = this.collection.map(function(item) {
-				return this.vDomAppendView(ItemView, { model: item, key: item.cid });
+				return <ItemView model={item} key={item.cid} />;
 			}.bind(this));
 		}
 

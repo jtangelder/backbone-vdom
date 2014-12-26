@@ -19,7 +19,7 @@ ViewWidget.prototype = {
 
     /**
      * called when the widget node is being set up
-     * @returns {HTMLElement}
+     * @returns {Node}
      */
     init: function () {
         var Constructor = this.ViewClass;
@@ -30,7 +30,7 @@ ViewWidget.prototype = {
     /**
      * called when the widget node already exists
      * @param {ViewWidget} prev instance
-     * @param {HTMLElement} element
+     * @param {Node} element
      */
     update: function (prev, element) {
         this.view = prev.view;
@@ -39,7 +39,7 @@ ViewWidget.prototype = {
 
     /**
      * called when the widget node is being removed
-     * @param {HTMLElement} element
+     * @param {Node} element
      */
     destroy: function (element) {
         this.view && this.view.remove();

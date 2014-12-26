@@ -9,6 +9,7 @@ var ElementWidget = require('./ElementWidget');
 var diff = require('virtual-dom/diff');
 var patch = require('virtual-dom/patch');
 var createElement = require('virtual-dom/create-element');
+var h = require('virtual-dom/h');
 
 var VDomView = Backbone.View.extend({
 	/**
@@ -19,26 +20,6 @@ var VDomView = Backbone.View.extend({
 	 * @returns {VNode}
 	 */
 	template: function(view) { },
-
-	/**
-	 * append a subView to the VNode tree
-	 * @param {Backbone.View} ViewClass
-	 * @param {object} [options]
-	 * @returns {ViewWidget}
-	 */
-	vDomAppendView: function(ViewClass, options) {
-		return new ViewWidget(ViewClass, options, (options && options.key));
-	},
-
-	/**
-	 * append a subView to the VNode tree
-	 * @param {HTMLElement} element
-	 * @param {object} attrs
-	 * @returns {ElementWidget}
-	 */
-	vDomAppendElement: function(element, attrs) {
-		return new ElementWidget(element, attrs, (attrs && attrs.key));
-	},
 
 	/**
 	 * trigger the rendering of the virtualDom
@@ -99,6 +80,13 @@ var VDomView = Backbone.View.extend({
 Backbone.VDomView = VDomView;
 
 // expose the hyperscript function to create a virtual dom tree
-Backbone.VDomView.h = require('virtual-dom/h');
+Backbone.VDomView.h = function(tag, attrs, childs) {
+	if(typeof tag === 'string') {
+		return h(tag, attrs, childs);
+	} else if(tag instanceof Node) {
+		return new ElementWidget(tag, attrs, (attrs && attrs.key));
+	}
+	return new ViewWidget(tag, attrs, (attrs && attrs.key));
+};
 
 module.exports = VDomView;

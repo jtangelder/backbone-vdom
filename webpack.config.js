@@ -8,7 +8,7 @@ module.exports = {
         filename: "index.js"
     },
     externals: {
-        jquery: 'new (function(q){return document.querySelectorAll(q); });' // fake the jQuery dependency of Backbone
+        jquery: 'new (function(q){return [q]; });' // fake the jQuery dependency of Backbone
     },
     resolve: {
         alias: {
