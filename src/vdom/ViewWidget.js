@@ -10,7 +10,8 @@ function ViewWidget(ViewClass, options, key) {
     this.options = options;
 
     // used by virtual-node to identify widgets
-    this.name = this.id = key;
+    this.name = 'View';
+    this.id = key;
 }
 
 ViewWidget.prototype = {
@@ -23,19 +24,18 @@ ViewWidget.prototype = {
     init: function () {
         var Constructor = this.ViewClass;
         this.view = new Constructor(this.options);
-
-        var element = this.view.render().el;
-        this.update(this, element);
-
-        return element;
+        return this.view.render().el;
     },
 
     /**
      * called when the widget node already exists
-     * @param {ViewWidget} widget instance
+     * @param {ViewWidget} prev instance
      * @param {HTMLElement} element
      */
-    update: function (widget, element) { },
+    update: function (prev, element) {
+        this.view = prev.view;
+        this.view.el = element;
+    },
 
     /**
      * called when the widget node is being removed

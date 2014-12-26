@@ -13,32 +13,31 @@ var createElement = require('virtual-dom/create-element');
 var VDomView = Backbone.View.extend({
 	/**
 	 * create a virtual-dom structure
+	 * receives the view instance as an argument
 	 * @abstract
+	 * @param {Backbone.VDomView} view
 	 * @returns {VNode}
 	 */
-	template: function() { },
+	template: function(view) { },
 
 	/**
 	 * append a subView to the VNode tree
 	 * @param {Backbone.View} ViewClass
 	 * @param {object} [options]
-	 * @param {number|string} [key]
 	 * @returns {ViewWidget}
 	 */
-	vDomAppendView: function(ViewClass, options, key) {
-		key = key || options.key || (options.model && (options.model.cid || options.model.id));
-		return new ViewWidget(ViewClass, options, this.cid + String(key));
+	vDomAppendView: function(ViewClass, options) {
+		return new ViewWidget(ViewClass, options, (options && options.key));
 	},
 
 	/**
 	 * append a subView to the VNode tree
 	 * @param {HTMLElement} element
-	 * @param {number|string} [key]
+	 * @param {object} attrs
 	 * @returns {ElementWidget}
 	 */
-	vDomAppendElement: function(element, key) {
-		key = key || element.id || element.__vdomkey || (element.__vdomkey = _.uniqueId('vdom'));
-		return new ElementWidget(element, this.cid + String(key));
+	vDomAppendElement: function(element, attrs) {
+		return new ElementWidget(element, attrs, (attrs && attrs.key));
 	},
 
 	/**
@@ -70,7 +69,7 @@ var VDomView = Backbone.View.extend({
 	 * do a virtual dom diff and update the real DOM
 	 */
 	vDomRender: function() {
-		var newTree = this.template();
+		var newTree = this.template(this);
 
 		if (this._tree && this.vDomElement) {
 			this._patches = diff(this._tree, newTree);

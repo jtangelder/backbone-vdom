@@ -27,9 +27,9 @@ var ItemView = Backbone.VDomView.extend({
 	template: function(){
 		return (
 			<div>
-				{this.model.get('name')}
-				<a onclick={this.onEdit.bind(this)}>[edit]</a>
-				<a onclick={this.onRemove.bind(this)}>[remove]</a>
+				#{this.model.cid} {this.model.get('name')}
+				<a onclick={this.onEdit.bind(this)}> [edit]</a>
+				<a onclick={this.onRemove.bind(this)}> [remove]</a>
 			</div>);
 	},
 
@@ -45,26 +45,22 @@ var ItemView = Backbone.VDomView.extend({
 });
 
 var ListView = Backbone.VDomView.extend({
-	el: document.body,
-
 	initialize: function(){
-		this.collection = new List();
 		this.collection.on('add remove', this.render.bind(this));
-
-		this.render();
 	},
 
 	template: function(){
 		var listItems;
 		if(this.collection.length) {
 			listItems = this.collection.map(function(item) {
-				return this.vDomAppendView(ItemView, { model: item });
+				return this.vDomAppendView(ItemView, { model: item, key: item.cid });
 			}.bind(this));
 		}
 
 		return (
 			<div>
 				<button onclick={this.onAddItem.bind(this)}>Add list item</button>
+				<h1>{this.collection.length.toString()} Items</h1>
 				<ul>
 					{listItems || <li><em>No Items</em></li>}
 				</ul>
@@ -77,8 +73,15 @@ var ListView = Backbone.VDomView.extend({
 });
 
 // go!
-new ListView();
+new ListView({
+	el: document.querySelector('#el1'),
+	collection: new List()
+}).render();
 
+new ListView({
+	el: document.querySelector('#el2'),
+	collection: new List()
+}).render();
 
 // overwrite this method from exoskeleton
 // because we don't want to use jQuery
