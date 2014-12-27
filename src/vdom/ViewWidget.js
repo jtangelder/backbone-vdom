@@ -1,12 +1,12 @@
 /**
  * Create a virtual-dom widget
- * @param {Backbone.View} ViewClass
+ * @param {Backbone.View|Function} view
  * @param {object} [props]
  * @param {string|number} [key]
  * @constructor
  */
-function ViewWidget(ViewClass, props, key) {
-    this.ViewClass = ViewClass;
+function ViewWidget(view, props, key) {
+    this.view = view;
     this.props = props;
 
     // used by virtual-node to identify widgets
@@ -22,8 +22,10 @@ ViewWidget.prototype = {
      * @returns {Node}
      */
     init: function () {
-        var Constructor = this.ViewClass;
-        this.view = new Constructor(this.props);
+        if (typeof this.view === 'function') {
+            var Constructor = this.view;
+            this.view = new Constructor(this.props);
+        }
         return this.view.render().el;
     },
 
