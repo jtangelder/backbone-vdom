@@ -27,7 +27,7 @@ var ItemView = Backbone.VDomView.extend({
 	template: function(){
 		return (
 			<div>
-				#{this.model.cid} {this.model.get('name')}
+				{this.model.cid} {this.model.get('name')}
 				<a onclick={this.onEdit.bind(this)}> [edit]</a>
 				<a onclick={this.onRemove.bind(this)}> [remove]</a>
 			</div>);
@@ -53,7 +53,7 @@ var ListView = Backbone.VDomView.extend({
 		var listItems;
 		if(this.collection.length) {
 			listItems = this.collection.map(function(item) {
-				return <ItemView model={item} key={item.cid} />;
+				return <ItemView model={item} key={item.cid} />
 			}.bind(this));
 		}
 
@@ -73,13 +73,14 @@ var ListView = Backbone.VDomView.extend({
 });
 
 // go!
+
 new ListView({
-	el: document.querySelector('#el1'),
+	el: document.querySelector('#el2'),
 	collection: new List()
 }).render();
 
 new ListView({
-	el: document.querySelector('#el2'),
+	el: document.querySelector('#el1'),
 	collection: new List()
 }).render();
 

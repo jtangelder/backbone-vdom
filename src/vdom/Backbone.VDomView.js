@@ -55,8 +55,8 @@ var VDomView = Backbone.View.extend({
 		var newTree = this.template(this);
 
 		if (this._vDom.tree && this._vDom.element) {
-			this._vDom.patches = diff(this._vDom.tree, newTree);
-			this._vDom.element = patch(this._vDom.element, this._vDom.patches);
+			var patches = diff(this._vDom.tree, newTree);
+			this._vDom.element = patch(this._vDom.element, patches);
 		}
 
 		this._vDom.tree = newTree;
@@ -83,16 +83,15 @@ Backbone.VDomView = VDomView;
 
 // expose the hyperscript function to create a virtual dom tree
 Backbone.VDomView.h = function(tag, attrs, childs) {
-	// known html tag, pass to hyperscript
-	if(typeof tag === 'string') {
-		return h(tag, attrs, childs);
+	console.log(typeof tag, tag, attrs, childs);
+	if(typeof tag === 'function') {
+		return new ViewWidget(tag, attrs, (attrs && attrs.key));
 	}
-	// create an html element widget
 	if(tag instanceof Node) {
 		return new ElementWidget(tag, attrs, (attrs && attrs.key));
 	}
-	// create a backbone view widget
-	return new ViewWidget(tag, attrs, (attrs && attrs.key));
+
+	return h(tag, attrs, childs);
 };
 
 module.exports = VDomView;
