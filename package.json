@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
+    "dom-delegator": "^12.0.0",
     "exoskeleton": "^0.7.0",
     "global": "^4.3.0",
     "jsx-transform": "git+https://github.com/jtangelder/jsx-transform.git#docblockUnkownTags",

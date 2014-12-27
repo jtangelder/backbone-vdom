@@ -4,6 +4,6 @@ module.exports = function jsxLoader(content) {
     return jsx.transform(content, {
         ignoreDocblock: true,
         docblockUnkownTags: true,
-        jsx: 'Backbone.VDomView.h'
+        jsx: 'Backbone.h'
     });
 };

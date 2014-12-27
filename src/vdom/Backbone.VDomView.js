@@ -1,26 +1,19 @@
 'use strict';
 
 var _ = require('lodash');
-var Backbone = require('exoskeleton');
 var raf = require('raf');
-var ViewWidget = require('./ViewWidget');
-var ElementWidget = require('./ElementWidget');
-
+var domDelegator = require('dom-delegator');
 var diff = require('virtual-dom/diff');
 var patch = require('virtual-dom/patch');
 var createElement = require('virtual-dom/create-element');
-var h = require('virtual-dom/h');
+var Backbone = require('exoskeleton');
+require('./Backbone.h');
+
+// domDelegator makes sure all events are using `ev-foo` events are delegated to the document,
+// so only one event is being bound to the DOM
+domDelegator();
 
 var VDomView = Backbone.View.extend({
-	_vDom: {
-		tree: {},
-		element: null
-	},
-
-	setProps: function(props) {
-		
-	},
-
 	/**
 	 * create a virtual-dom structure
 	 * receives the view instance as an argument
@@ -87,17 +80,4 @@ var VDomView = Backbone.View.extend({
 });
 
 Backbone.VDomView = VDomView;
-
-// expose the hyperscript function to create a virtual dom tree
-Backbone.VDomView.h = function(tag, props, childs) {
-	if(typeof tag === 'function') {
-		return new ViewWidget(tag, props, (props && props.key));
-	}
-	if(tag instanceof Node) {
-		return new ElementWidget(tag, props, (props && props.key));
-	}
-
-	return h(tag, props, childs);
-};
-
 module.exports = VDomView;
