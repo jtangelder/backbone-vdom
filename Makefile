@@ -1,5 +1,5 @@
 webpack:
-	webpack -w -d
+	webpack -w -p
 
 server:
 	cd build && python -m SimpleHTTPServer
