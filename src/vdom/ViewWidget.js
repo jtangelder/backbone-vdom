@@ -1,3 +1,5 @@
+var Backbone = require('exoskeleton');
+
 /**
  * Create a virtual-dom widget
  * @param {Backbone.View|Function} view
@@ -26,6 +28,7 @@ ViewWidget.prototype = {
             var Constructor = this.view;
             this.view = new Constructor(this.props);
         }
+        this.update(null, this.view.el);
         return this.view.render().el;
     },
 
@@ -35,8 +38,15 @@ ViewWidget.prototype = {
      * @param {Node} element
      */
     update: function (prev, element) {
-        this.view = prev.view;
+        if(prev) {
+            this.view = prev.view;
+        }
+
         this.view.el = element;
+
+        if(this.view.props instanceof Backbone.Model) {
+            this.view.props.set(this.props);
+        }
     },
 
     /**

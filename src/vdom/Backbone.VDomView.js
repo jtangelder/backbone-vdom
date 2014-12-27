@@ -15,6 +15,16 @@ domDelegator();
 
 var VDomView = Backbone.View.extend({
 	/**
+	 * extend the view with a props property,
+	 * containing all the properties of the virtual dom node
+	 * @returns {*}
+	 */
+	constructor: function() {
+		this.props = new Backbone.Model();
+		return Backbone.View.apply(this, arguments);
+	},
+
+	/**
 	 * create a virtual-dom structure
 	 * receives the view instance as an argument
 	 * @abstract

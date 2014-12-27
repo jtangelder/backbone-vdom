@@ -4,12 +4,11 @@
 - VirtualDOM
 - requestAnimationFrame batches
 - Delegated events
-- JSX
+- Webpack JSX loader
 
 ## Install
 ````
-npm install
-sudo npm install webpack -g
+make install
 ````
 
 ## Run
