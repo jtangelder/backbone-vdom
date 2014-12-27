@@ -4,6 +4,7 @@ var _ = require('lodash');
 var document = require('global/document');
 var Backbone = require('exoskeleton');
 require('./vdom/Backbone.VDomView');
+var classList = require('./vdom/classList');
 
 // small example backbone application to demo and test the workings
 
@@ -50,6 +51,7 @@ var ListView = Backbone.VDomView.extend({
 	},
 
 	template: function(){
+		// example of showing collections
 		var listItems;
 		if(this.collection.length) {
 			listItems = this.collection.map(function(item) {
@@ -57,11 +59,18 @@ var ListView = Backbone.VDomView.extend({
 			}.bind(this));
 		}
 
+		// example of the classList helper function
+		var listClassNames = classList({
+			yes: true,
+			no: false,
+			odd: this.collection.length % 2
+		});
+
 		return (
 			<div>
 				<button ev-click={this.onAddItem.bind(this)}>Add list item</button>
 				<h1>{this.collection.length.toString()} Items</h1>
-				<ul>
+				<ul className={listClassNames}>
 					{listItems || <li><em>No Items</em></li>}
 				</ul>
 			</div>);
