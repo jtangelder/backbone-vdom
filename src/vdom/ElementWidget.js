@@ -1,13 +1,13 @@
 /**
  * Create a virtual-dom widget
  * @param {Node} element
- * @param {object} attrs
+ * @param {object} props
  * @param {string|number} [key]
  * @constructor
  */
-function ElementWidget(element, attrs, key) {
+function ElementWidget(element, props, key) {
     this.element = element;
-    this.attrs = attrs || {};
+    this.props = props || {};
 
     // used by virtual-node to identify widgets
     this.name = 'Element';
@@ -28,18 +28,12 @@ ElementWidget.prototype = {
 
     /**
      * called when the widget node already exists
-     * @param {ViewWidget} prev instance
+     * @param {ViewWidget} prev
      * @param {Node} element
      */
     update: function (prev, element) {
-        this.element = element;
-
-        if(prev) {
-            this.attrs = prev.attrs || {};
-        }
-
-        for(var attr in this.attrs) {
-            this.element[attr] = this.attrs[attr];
+        for(var prop in this.props) {
+            this.element[prop] = this.props[prop];
         }
     },
 

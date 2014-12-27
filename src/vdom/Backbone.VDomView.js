@@ -12,7 +12,14 @@ var createElement = require('virtual-dom/create-element');
 var h = require('virtual-dom/h');
 
 var VDomView = Backbone.View.extend({
-	_vDom: {},
+	_vDom: {
+		tree: {},
+		element: null
+	},
+
+	setProps: function(props) {
+		
+	},
 
 	/**
 	 * create a virtual-dom structure
@@ -31,10 +38,10 @@ var VDomView = Backbone.View.extend({
 	 */
 	render: function (immediately) {
 		// initial render
-		if (!this._vDom.element) {
+		if (!this._vDomElement) {
 			this._vDomRender();
-			this._vDom.element = createElement(this._vDom.tree);
-			this.el.appendChild(this._vDom.element);
+			this._vDomElement = createElement(this._vDomTree);
+			this.el.appendChild(this._vDomElement);
 		}
 		// immediately render the virtualDom
 		else if(immediately === true) {
@@ -54,26 +61,26 @@ var VDomView = Backbone.View.extend({
 	_vDomRender: function() {
 		var newTree = this.template(this);
 
-		if (this._vDom.tree && this._vDom.element) {
-			var patches = diff(this._vDom.tree, newTree);
-			this._vDom.element = patch(this._vDom.element, patches);
+		if (this._vDomTree && this._vDomElement) {
+			var patches = diff(this._vDomTree, newTree);
+			this._vDomElement = patch(this._vDomElement, patches);
 		}
 
-		this._vDom.tree = newTree;
+		this._vDomTree = newTree;
 	},
 
 	/**
 	 * wait for the next animation frame to update the dom
 	 */
 	_vDomQueueRender: function() {
-		if(this._vDom.rafScheduled) {
+		if(this._vDomRaf) {
 			return;
 		}
 
-		this._vDom.rafScheduled = true;
+		this._vDomRaf = true;
 
 		raf(function() {
-			this._vDom.rafScheduled = false;
+			this._vDomRaf = false;
 			this._vDomRender()
 		}.bind(this));
 	}
@@ -82,16 +89,15 @@ var VDomView = Backbone.View.extend({
 Backbone.VDomView = VDomView;
 
 // expose the hyperscript function to create a virtual dom tree
-Backbone.VDomView.h = function(tag, attrs, childs) {
-	console.log(typeof tag, tag, attrs, childs);
+Backbone.VDomView.h = function(tag, props, childs) {
 	if(typeof tag === 'function') {
-		return new ViewWidget(tag, attrs, (attrs && attrs.key));
+		return new ViewWidget(tag, props, (props && props.key));
 	}
 	if(tag instanceof Node) {
-		return new ElementWidget(tag, attrs, (attrs && attrs.key));
+		return new ElementWidget(tag, props, (props && props.key));
 	}
 
-	return h(tag, attrs, childs);
+	return h(tag, props, childs);
 };
 
 module.exports = VDomView;
