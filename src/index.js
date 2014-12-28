@@ -1,15 +1,14 @@
 'use strict';
 
-var _ = require('lodash');
 var Backbone = require('exoskeleton');
-require('./vdom/Backbone.VDomView');
-var classList = require('./vdom/classList');
+Backbone.VDomView = require('./vdom/VDomView.js');
+var classList = require('./vdom/helpers/classList');
 
 
 // overwrite this method from exoskeleton
 // because we don't want to use jQuery
 Backbone.View.prototype._setAttributes = function(attrs) {
-	if(!this.el) {
+	if(!this.el || !this.el.setAttribute) {
 		return;
 	}
 	for(var name in attrs) {
@@ -56,12 +55,12 @@ var ItemView = Backbone.VDomView.extend({
 
 	template: function(){
 		return (
-			<div>
-				{this.props.get('date').toString()}
+			<li>
+				{this.props.get('date').toTimeString()} ---
 				{this.model.cid} {this.model.get('name')}
 				<a ev-click={this.onEdit.bind(this)}> [edit]</a>
 				<a ev-click={this.onRemove.bind(this)}> [remove]</a>
-			</div>);
+			</li>);
 	},
 
 	onEdit: function() {
@@ -81,6 +80,9 @@ var ListView = Backbone.VDomView.extend({
 
 		// initialize a static, regular Backbone.View
 		this.headerView = new HeaderView();
+
+		setInterval(this.render.bind(this), 1000);
+
 	},
 
 	template: function(){
@@ -106,7 +108,7 @@ var ListView = Backbone.VDomView.extend({
 			<div>
 				<Header />
 				<button ev-click={this.onAddItem.bind(this)}>Add list item</button>
-				<h3>{this.collection.length.toString()} Items</h3>
+				<h3>{String(this.collection.length)} Items</h3>
 				<ul className={listClassNames}>
 					{listItems || <li><em>No Items</em></li>}
 				</ul>

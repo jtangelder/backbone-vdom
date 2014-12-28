@@ -1,20 +1,20 @@
 /**
  * Create a virtual-dom widget
- * @param {Node} element
+ * @param {Node} node
  * @param {object} props
  * @param {string|number} [key]
  * @constructor
  */
-function ElementWidget(element, props, key) {
-    this.element = element;
+function NodeWidget(node, props, key) {
+    this.node = node;
     this.props = props || {};
 
     // used by virtual-node to identify widgets
-    this.name = 'Element';
+    this.name = 'Node';
     this.id = key;
 }
 
-ElementWidget.prototype = {
+NodeWidget.prototype = {
     type: 'Widget',
 
     /**
@@ -22,28 +22,28 @@ ElementWidget.prototype = {
      * @returns {Node}
      */
     init: function () {
-        this.update(null, this.element);
-        return this.element;
+        this.update(null, this.node);
+        return this.node;
     },
 
     /**
      * called when the widget node already exists
      * @param {ViewWidget} prev
-     * @param {Node} element
+     * @param {Node} node
      */
-    update: function (prev, element) {
+    update: function (prev, node) {
         for(var prop in this.props) {
-            this.element[prop] = this.props[prop];
+            this.node[prop] = this.props[prop];
         }
     },
 
     /**
      * called when the widget node is being removed
-     * @param {Node} element
+     * @param {Node} node
      */
-    destroy: function (element) {
-        this.element = null;
+    destroy: function (node) {
+        this.node = null;
     }
 };
 
-module.exports = ElementWidget;
+module.exports = NodeWidget;

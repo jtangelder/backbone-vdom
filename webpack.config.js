@@ -7,11 +7,11 @@ var OUTPUT_POSTFIX = '.js'; // '.[chunkhash].js';
 
 var config = {
     entry:  {
-        app: __dirname + "/src/index.js",
-        vendor: ["exoskeleton", "lodash", "virtual-dom", "dom-delegator", "raf", "global"]
+        app: path.join(__dirname, 'src', 'index.js'),
+        vendor: ['dom-delegator', 'exoskeleton', 'global', 'lodash', 'raf', 'virtual-dom']
     },
     output: {
-        path: __dirname + "/build/js/",
+        path: path.join(__dirname, 'build', 'js'),
         filename: "app" + OUTPUT_POSTFIX
     },
     externals: {
@@ -24,7 +24,7 @@ var config = {
     },
     module: {
         loaders: [
-            { test: /\.js/, loader: __dirname + "/jsx-loader.js" }
+            { test: /\.js/, loader: path.join(__dirname, 'jsx-loader.js') }
         ]
     },
     plugins: [
@@ -52,13 +52,12 @@ var config = {
                     })
                     // remove files
                     .forEach(function(filename) {
-                        console.log(filename, assetFiles);
                         fs.unlink(path.join(config.output.path, filename));
                     });
 
-                // write a webpack stats file
+                // write a webpack assets file
                 fs.writeFileSync(
-                    path.join(__dirname, "webpack.stats.json"),
+                    path.join(__dirname, "webpack.assets.json"),
                     JSON.stringify(assets));
             });
         }

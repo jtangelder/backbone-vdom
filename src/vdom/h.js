@@ -1,6 +1,6 @@
 var Backbone = require('exoskeleton');
 var ViewWidget = require('./ViewWidget');
-var ElementWidget = require('./ElementWidget');
+var NodeWidget = require('./NodeWidget');
 var hyperScript = require('virtual-dom/h');
 
 function h(tag, props, childs) {
@@ -9,11 +9,11 @@ function h(tag, props, childs) {
 		return new ViewWidget(tag, props, (props && props.key));
 	}
 	if(tag instanceof Node) {
-		return new ElementWidget(tag, props, (props && props.key));
+		return new NodeWidget(tag, props, (props && props.key));
 	}
 
 	return hyperScript(tag, props, childs);
 }
 
-module.exports = h;
 Backbone.h = h;
+module.exports = h;

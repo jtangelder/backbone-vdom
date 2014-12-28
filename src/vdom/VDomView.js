@@ -1,13 +1,13 @@
 'use strict';
 
+var Backbone = require('exoskeleton');
+Backbone.h = require('./h.js');
 var _ = require('lodash');
 var raf = require('raf');
 var domDelegator = require('dom-delegator');
 var diff = require('virtual-dom/diff');
 var patch = require('virtual-dom/patch');
 var createElement = require('virtual-dom/create-element');
-var Backbone = require('exoskeleton');
-require('./Backbone.h');
 
 // domDelegator makes sure all events are using `ev-foo` events are delegated to the document,
 // so only one event is being bound to the DOM
