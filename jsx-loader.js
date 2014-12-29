@@ -1,9 +1,9 @@
-var jsx = require('jsx-transform');
+var jsx = require('jsx-transform/lib/jsx');
 
 module.exports = function jsxLoader(content) {
     return jsx.transform(content, {
         ignoreDocblock: true,
-        docblockUnkownTags: true,
+        docblockUnknownTags: true,
         jsx: 'Backbone.h'
     });
 };
