@@ -74,14 +74,14 @@ var VDomView = Backbone.View.extend({
 	},
 
 	/**
-	 * destroy
+	 * destroy view instance
 	 */
-	destroy: function() {
+	remove: function() {
 		this.props = null;
 		this._vDomElement = null;
 		this._vDomTree = null;
 
-		Backbone.View.prototype.destroy.apply(this, arguments);
+		Backbone.View.prototype.remove.apply(this, arguments);
 	}
 });
 

@@ -20,6 +20,8 @@ Backbone.View.prototype._removeElement = function() {
 	if (this.el.parentNode) {
 		this.el.parentNode.removeChild(this.el);
 	}
+	this.el = null;
+	this.$el = null;
 };
 
 //
@@ -92,7 +94,7 @@ var ItemView = Backbone.VDomView.extend({
 // main app
 var ListView = Backbone.VDomView.extend({
 	initialize: function(){
-		this.listenTo(this.collection, 'add remove', this.render.bind(this));
+		this.listenTo(this.collection, 'add remove reset', this.render.bind(this));
 
 		// initialize a static, regular Backbone.View
 		this.headerView = new HeaderView();
@@ -127,6 +129,7 @@ var ListView = Backbone.VDomView.extend({
 					<p>Child content... {new Date().toString()}</p>
 				</WrapperView>
 				<button ev-click={this.onAddItem.bind(this)}>Add list item</button>
+				<button ev-click={this.onRemoveAll.bind(this)}>Remove all</button>
 				<h3>{String(this.collection.length)} Items</h3>
 				<ul className={listClassNames}>
 					{listItems || <li><em>No Items</em></li>}
@@ -136,6 +139,10 @@ var ListView = Backbone.VDomView.extend({
 
 	onAddItem: function(){
 		this.collection.add(new Item());
+	},
+
+	onRemoveAll: function(){
+		this.collection.reset();
 	}
 });
 

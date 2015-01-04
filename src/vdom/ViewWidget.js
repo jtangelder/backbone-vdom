@@ -58,6 +58,7 @@ ViewWidget.prototype = {
     destroy: function (element) {
         this.view && this.view.remove();
 
+        this.view.el = null;
         this.view = null;
         this.props = null;
     }
