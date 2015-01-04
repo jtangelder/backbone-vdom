@@ -3,11 +3,12 @@
 var Backbone = require('exoskeleton');
 Backbone.h = require('./h.js');
 var _ = require('lodash');
-var raf = require('raf');
 var domDelegator = require('dom-delegator');
 var diff = require('virtual-dom/diff');
 var patch = require('virtual-dom/patch');
 var createElement = require('virtual-dom/create-element');
+var raf = require('raf');
+var renderQueue = require('./renderQueue');
 
 // domDelegator makes sure all events are using `ev-foo` events are delegated to the document,
 // so only one event is being bound to the DOM
@@ -52,7 +53,7 @@ var VDomView = Backbone.View.extend({
 		}
 		// queue the render to the next animation frame
 		else {
-			this._vDomQueueRender();
+			renderQueue(this);
 		}
 
 		return this;
@@ -73,19 +74,14 @@ var VDomView = Backbone.View.extend({
 	},
 
 	/**
-	 * wait for the next animation frame to update the dom
+	 * destroy
 	 */
-	_vDomQueueRender: function() {
-		if(this._vDomRaf) {
-			return;
-		}
+	destroy: function() {
+		this.props = null;
+		this._vDomElement = null;
+		this._vDomTree = null;
 
-		this._vDomRaf = true;
-
-		raf(function() {
-			this._vDomRaf = false;
-			this._vDomRender()
-		}.bind(this));
+		Backbone.View.prototype.destroy.apply(this, arguments);
 	}
 });
 

@@ -43,6 +43,7 @@ NodeWidget.prototype = {
      */
     destroy: function (node) {
         this.node = null;
+        this.props = null;
     }
 };
 

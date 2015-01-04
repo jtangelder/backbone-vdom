@@ -36,6 +36,7 @@ var List = Backbone.Collection.extend({
 	model: Item
 });
 
+// classic backbone view
 var HeaderView = Backbone.View.extend({
 	tagName: 'header',
 	template: "<h1>Backbone.VDomView example</h1>",
@@ -45,6 +46,20 @@ var HeaderView = Backbone.View.extend({
 	}
 });
 
+// vdom view with children
+var WrapperView = Backbone.VDomView.extend({
+	tagName: 'div',
+
+	initialize: function(){
+		this.listenTo(this.props, 'change', this.render.bind(this));
+	},
+
+	template: function(){
+		return (<div>Hi... {this.props.get('children')}</div>);
+	}
+});
+
+// model item view
 var ItemView = Backbone.VDomView.extend({
 	tagName: 'li',
 
@@ -74,6 +89,7 @@ var ItemView = Backbone.VDomView.extend({
 	}
 });
 
+// main app
 var ListView = Backbone.VDomView.extend({
 	initialize: function(){
 		this.listenTo(this.collection, 'add remove', this.render.bind(this));
@@ -107,6 +123,9 @@ var ListView = Backbone.VDomView.extend({
 		return (
 			<div>
 				<Header />
+				<WrapperView>
+					<p>Child content... {new Date().toString()}</p>
+				</WrapperView>
 				<button ev-click={this.onAddItem.bind(this)}>Add list item</button>
 				<h3>{String(this.collection.length)} Items</h3>
 				<ul className={listClassNames}>
