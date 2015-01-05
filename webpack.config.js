@@ -3,8 +3,6 @@ var path = require('path');
 var fs = require('fs');
 var _ = require('lodash');
 
-var OUTPUT_POSTFIX = '.js'; // '.[chunkhash].js';
-
 var config = {
     entry:  {
         app: path.join(__dirname, 'src', 'index.js'),
@@ -12,7 +10,7 @@ var config = {
     },
     output: {
         path: path.join(__dirname, 'build', 'js'),
-        filename: "app" + OUTPUT_POSTFIX
+        filename: "app.js"
     },
     externals: {
         jquery: 'new (function(q){return [q]; });' // fake the jQuery dependency of Backbone
@@ -28,37 +26,14 @@ var config = {
         ]
     },
     plugins: [
-        // create a cachable vendor js file
-        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor" + OUTPUT_POSTFIX),
+        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js"),
 
-        // remove unusued chunk files
+        // write a webpack stats file
         function() {
             this.plugin("done", function(stats) {
-                var assets = stats.toJson().assetsByChunkName;
-                var assetFiles = _.flatten(_.values(assets));
-                var assetNames = Object.keys(assets);
-
-                // remove all previous generated chunk files
-                fs.readdirSync(config.output.path)
-                    // only chuck files
-                    .filter(function(filename) {
-                        return _.find(assetNames, function(name) {
-                            return filename.indexOf(name) === 0;
-                        });
-                    })
-                    // exclude the just generated files
-                    .filter(function(filename) {
-                        return assetFiles.indexOf(filename) === -1;
-                    })
-                    // remove files
-                    .forEach(function(filename) {
-                        fs.unlink(path.join(config.output.path, filename));
-                    });
-
-                // write a webpack assets file
                 fs.writeFileSync(
-                    path.join(__dirname, "webpack.assets.json"),
-                    JSON.stringify(assets));
+                    path.join(__dirname, "webpack.stats.json"),
+                    JSON.stringify(stats.toJson()));
             });
         }
     ]
