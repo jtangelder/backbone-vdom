@@ -108,7 +108,7 @@ var ListView = Backbone.VDomView.extend({
 		var listItems;
 		if(this.collection.length) {
 			listItems = this.collection.map((item)=>
-				<ItemView model={item} key={item.cid} date={new Date()}/>
+				<ItemView model={item} key={item.cid} date={new Date()} />
 			);
 		}
 

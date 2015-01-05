@@ -24,7 +24,7 @@ var config = {
     },
     module: {
         loaders: [
-            { test: /\.js/, loader: 'es6!' + path.join(__dirname, 'jsx-loader.js') }
+            { test: /\.js/, loader: 'es6!' + path.join(__dirname, 'jstransform-loader.js') }
         ]
     },
     plugins: [
