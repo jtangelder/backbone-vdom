@@ -63,7 +63,7 @@ var WrapperView = Backbone.VDomView.extend({
 
 // model item view
 var ItemView = Backbone.VDomView.extend({
-	tagName: 'li',
+	replaceParent: true,
 
 	initialize: function(){
 		this.listenTo(this.model, 'change', this.render.bind(this));
@@ -107,7 +107,7 @@ var ListView = Backbone.VDomView.extend({
 		// example of showing collections
 		var listItems;
 		if(this.collection.length) {
-			listItems = this.collection.map((item)=>
+			listItems = this.collection.map(item=>
 				<ItemView model={item} key={item.cid} date={new Date()} />
 			);
 		}

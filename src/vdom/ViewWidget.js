@@ -30,7 +30,6 @@ ViewWidget.prototype = {
             this.view = new Constructor(this.props);
         }
         this.update(null, this.view.el);
-
         return this.view.render().el;
     },
 
@@ -43,7 +42,6 @@ ViewWidget.prototype = {
         if(prev) {
             this.view = prev.view;
         }
-
         this.view.el = element;
 
         if(this.view.props instanceof Backbone.Model) {
@@ -58,7 +56,6 @@ ViewWidget.prototype = {
     destroy: function (element) {
         this.view && this.view.remove();
 
-        this.view.el = null;
         this.view = null;
         this.props = null;
     }

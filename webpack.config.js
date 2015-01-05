@@ -33,7 +33,7 @@ var config = {
             this.plugin("done", function(stats) {
                 fs.writeFileSync(
                     path.join(__dirname, "webpack.stats.json"),
-                    JSON.stringify(stats.toJson()));
+                    JSON.stringify(stats.toJson(), null, '\t'));
             });
         }
     ]

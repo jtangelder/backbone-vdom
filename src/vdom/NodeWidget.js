@@ -33,7 +33,7 @@ NodeWidget.prototype = {
      */
     update: function (prev, node) {
         for(var prop in this.props) {
-            this.node[prop] = this.props[prop];
+            this.node.setAttribute(prop, this.props[prop]);
         }
     },
 

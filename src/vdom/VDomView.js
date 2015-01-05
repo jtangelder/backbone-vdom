@@ -42,14 +42,18 @@ var VDomView = Backbone.View.extend({
 	 */
 	render: function (immediately) {
 		// initial render
-		if (!this._vDomElement) {
+		if (!this._vDomElement || immediately === true) {
 			this._vDomRender();
-			this._vDomElement = createElement(this._vDomTree);
-			this.el.appendChild(this._vDomElement);
-		}
-		// immediately render the virtualDom
-		else if(immediately === true) {
-			this._vDomRender();
+
+			if (!this._vDomElement) {
+				this._vDomElement = createElement(this._vDomTree);
+
+				if (this.replaceParent) {
+					this.el = this._vDomElement;
+				} else {
+					this.el.appendChild(this._vDomElement);
+				}
+			}
 		}
 		// queue the render to the next animation frame
 		else {
