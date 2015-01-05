@@ -6,6 +6,7 @@
   "dependencies": {},
   "devDependencies": {
     "dom-delegator": "^12.0.0",
+    "es6-loader": "^0.2.0",
     "exoskeleton": "^0.7.0",
     "jsx-transform": "^0.9.0",
     "lodash": "^2.4.1",

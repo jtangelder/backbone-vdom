@@ -107,9 +107,9 @@ var ListView = Backbone.VDomView.extend({
 		// example of showing collections
 		var listItems;
 		if(this.collection.length) {
-			listItems = this.collection.map(function(item) {
-				return <ItemView model={item} key={item.cid} date={new Date()}/>
-			}.bind(this));
+			listItems = this.collection.map((item)=>
+				<ItemView model={item} key={item.cid} date={new Date()}/>
+			);
 		}
 
 		// example of the classList helper function

@@ -5,6 +5,7 @@
 - requestAnimationFrame batches
 - Delegated events
 - Webpack JSX loader
+- Webpack ES6 loader
 
 ## Install
 ````
