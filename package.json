@@ -6,10 +6,9 @@
   "dependencies": {},
   "devDependencies": {
     "dom-delegator": "^12.0.0",
-    "es6-loader": "^0.2.0",
     "exoskeleton": "^0.7.0",
     "jstransform": "^8.2.0",
-    "jsx-transform": "git+https://git@github.com/jtangelder/jsx-transform.git#expose-visitor",
+    "jsx-transform": "^0.10.0",
     "lodash": "^2.4.1",
     "raf": "^2.0.4",
     "virtual-dom": "0.0.24",
