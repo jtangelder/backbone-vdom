@@ -16,6 +16,12 @@ domDelegator();
 
 var VDomView = Backbone.View.extend({
 	/**
+	 * when set to `true`, the view element that is created by Backbone will be replaced by the element of
+	 * `virtualDom/createElement` function.
+	 */
+	replaceElement: false,
+
+	/**
 	 * extend the view with a props property,
 	 * containing all the properties of the virtual dom node
 	 * @returns {*}
@@ -48,7 +54,7 @@ var VDomView = Backbone.View.extend({
 			if (!this._vDomElement) {
 				this._vDomElement = createElement(this._vDomTree);
 
-				if (this.replaceParent) {
+				if (this.replaceElement) {
 					this.el = this._vDomElement;
 				} else {
 					this.el.appendChild(this._vDomElement);

@@ -63,7 +63,7 @@ var WrapperView = Backbone.VDomView.extend({
 
 // model item view
 var ItemView = Backbone.VDomView.extend({
-	replaceParent: true,
+	replaceElement: true,
 
 	initialize: function(){
 		this.listenTo(this.model, 'change', this.render.bind(this));
